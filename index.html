@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mufflers — Your Certified Friend</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F7F0E3;
+      --warm-white: #FFFDF7;
+      --orange: #E8630A;
+      --brown: #3B2010;
+      --brown-mid: #6B3F1E;
+      --grey: #9B8B7A;
+    }
+
+    body {
+      background: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--brown);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      animation: fadeDown 0.6s ease 0.2s both;
+    }
+    .header-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 0.3rem;
+    }
+    .header-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      color: var(--brown);
+      line-height: 1.1;
+    }
+    .header-title span { color: var(--orange); }
+    .header-sub {
+      font-size: 0.75rem;
+      color: var(--grey);
+      font-style: italic;
+      margin-top: 0.4rem;
+    }
+
+    .video-wrap {
+      width: 100%;
+      max-width: 360px;
+      border: 3px solid var(--brown);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 6px 6px 0 var(--brown);
+      background: #000;
+      animation: fadeUp 0.7s ease 0.4s both;
+    }
+    .video-wrap iframe {
+      width: 100%;
+      aspect-ratio: 9/16;
+      display: block;
+      border: none;
+    }
+
+    .questions-section {
+      width: 100%;
+      max-width: 360px;
+      margin-top: 1.8rem;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .questions-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .questions-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      text-align: center;
+      margin-bottom: 0.9rem;
+    }
+    .questions-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .q-btn {
+      background: var(--warm-white);
+      border: 2px solid var(--brown);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--brown);
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 var(--brown);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .q-btn:hover {
+      background: var(--cream);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--brown);
+    }
+    .q-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--brown);
+    }
+    .q-btn.active {
+      background: var(--orange);
+      color: var(--warm-white);
+      border-color: var(--brown);
+    }
+    .q-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+    .response-wrap {
+      width: 100%;
+      max-width: 360px;
+      margin-top: 1.2rem;
+      display: none;
+    }
+    .response-wrap.visible {
+      display: block;
+      animation: fadeUp 0.5s ease both;
+    }
+    .response-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--grey);
+      text-align: center;
+      margin-bottom: 0.6rem;
+    }
+    .response-video {
+      width: 100%;
+      border: 3px solid var(--brown);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 6px 6px 0 var(--brown);
+      background: #000;
+    }
+    .response-video iframe {
+      width: 100%;
+      aspect-ratio: 9/16;
+      display: block;
+      border: none;
+    }
+
+    .cert-strip {
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 360px;
+      background: var(--warm-white);
+      border: 2px solid var(--brown);
+      border-radius: 4px;
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 4px 4px 0 var(--brown);
+      animation: fadeUp 0.7s ease 0.8s both;
+    }
+    .cert-left p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--grey);
+      line-height: 1.7;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .cert-left strong { color: var(--brown); }
+    .cert-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .badge-ring {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    .badge-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+      text-align: center;
+    }
+
+    .footer {
+      margin-top: 1.2rem;
+      font-size: 0.72rem;
+      color: var(--grey);
+      font-style: italic;
+      text-align: center;
+      animation: fadeUp 0.7s ease 1s both;
+    }
+    .footer strong { color: var(--orange); font-style: normal; }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <p class="header-label">Official Documentation · Father's Day 2026</p>
+    <h1 class="header-title">Meet <span>Mufflers</span></h1>
+    <p class="header-sub">Your certified friend. Procured by Naveeta.</p>
+  </header>
+
+  <div class="video-wrap">
+    <iframe
+      src="https://drive.google.com/file/d/1TdySVHZ_lW5VdPZEcGiMIYZsD3e5h1E_/preview"
+      allow="autoplay"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div class="questions-section" id="questions-section">
+    <p class="questions-label">Mufflers is taking questions</p>
+    <div class="questions-grid">
+      <button class="q-btn" onclick="showResponse('good-friend', this)">
+        <span class="q-icon">🐾</span> Are you a good friend?
+      </button>
+      <button class="q-btn" onclick="showResponse('only-friend', this)">
+        <span class="q-icon">🐾</span> Are you my only friend?
+      </button>
+      <button class="q-btn" onclick="showResponse('why-cat', this)">
+        <span class="q-icon">🐾</span> Why a cat?
+      </button>
+    </div>
+  </div>
+
+  <div class="response-wrap" id="response-wrap">
+    <p class="response-label">Mufflers responds</p>
+    <div class="response-video">
+      <iframe id="response-iframe" src="" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="cert-strip">
+    <div class="cert-left">
+      <p>Friend: <strong>Mufflers</strong></p>
+      <p>Cert No. <strong>MUFF-001</strong></p>
+      <p>Gifted by <strong>Naveeta</strong></p>
+      <p>Status: <strong>Non-refundable</strong></p>
+    </div>
+    <div class="cert-badge">
+      <div class="badge-ring">🐾</div>
+      <p class="badge-label">Officially<br>Certified</p>
+    </div>
+  </div>
+
+  <p class="footer">
+    Mufflers accepts no liability for hairballs, 3am zoomies, or emotional unavailability.<br>
+    <strong>Happy Father's Day, Chach. 🧡</strong>
+  </p>
+
+  <script>
+    const videos = {
+      'good-friend': 'https://drive.google.com/file/d/1y-2_jzcS_UbtcZaxz0IDUovTHnZNytcU/preview',
+      'only-friend': 'https://drive.google.com/file/d/1taAiruEl1-2SXgruHqmlCXHmLORzY49E/preview',
+      'why-cat':     'https://drive.google.com/file/d/1mVsUDycXBpWsGumTZJqdE3wn-phgh2Qu/preview',
+    };
+
+    let activeKey = null;
+
+    function showResponse(key, btn) {
+      if (activeKey === key) {
+        document.getElementById('response-wrap').classList.remove('visible');
+        document.getElementById('response-iframe').src = '';
+        btn.classList.remove('active');
+        activeKey = null;
+        return;
+      }
+
+      document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeKey = key;
+
+      const iframe = document.getElementById('response-iframe');
+      iframe.src = videos[key];
+
+      const wrap = document.getElementById('response-wrap');
+      wrap.classList.remove('visible');
+      void wrap.offsetWidth;
+      wrap.classList.add('visible');
+
+      setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    }
+
+    setTimeout(() => {
+      document.getElementById('questions-section').classList.add('visible');
+    }, 4000);
+  </script>
+
+</body>
+</html>
